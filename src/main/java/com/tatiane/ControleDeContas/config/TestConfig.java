@@ -11,9 +11,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.tatiane.ControleDeContas.entities.Conta;
+import com.tatiane.ControleDeContas.entities.MovimentoConta;
 import com.tatiane.ControleDeContas.entities.PessoaFisica;
 import com.tatiane.ControleDeContas.entities.PessoaJuridica;
 import com.tatiane.ControleDeContas.repositories.ContaRepository;
+import com.tatiane.ControleDeContas.repositories.MovimentoContaRepository;
 import com.tatiane.ControleDeContas.repositories.PessoaFisicaRepository;
 import com.tatiane.ControleDeContas.repositories.PessoaJuridicaRepository;
 
@@ -32,6 +34,9 @@ public class TestConfig implements CommandLineRunner{
 	@Autowired
 	private ContaRepository contaRepository;
 	
+	@Autowired
+	private MovimentoContaRepository movimentoConta;
+	
 	@Override
 	public void run(String... args) throws Exception {
 		
@@ -43,10 +48,12 @@ public class TestConfig implements CommandLineRunner{
 		PessoaFisica pf1 = new PessoaFisica(null,"Maria Carvalho", "12345678910","F", data);
 		PessoaJuridica pj1 = new PessoaJuridica(null,"MAVariedades","21.125.123/0001-10","J","MAVariedadesLTDA");
 		Conta conta1 = new Conta(null, "conta1", Instant.now(), 0.0, pf1);
+		MovimentoConta mc = new MovimentoConta(null,"Deposito", Instant.now(), "Pagamento de Mercadoria",conta1);
 		
 		pessoaFisicaRepository.saveAll(Arrays.asList(pf1));
 		pessoaJuridicaRepository.saveAll(Arrays.asList(pj1));
 		contaRepository.saveAll(Arrays.asList(conta1));
+		movimentoConta.saveAll(Arrays.asList(mc));
 
 	}
 	
