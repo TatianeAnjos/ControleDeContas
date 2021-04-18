@@ -29,6 +29,16 @@ public class ContaService {
 
 	private Double valorMaximoPF = 500.00;
 	private Double valorMaximoPJ = 2000.00;
+	
+
+	public boolean isValorValido(Conta conta,Double valor) {
+		if ((conta != null && valor > 0.0 && ((conta.getPessoa().getTipo_pessoa().equals("F") && valor <= valorMaximoPF)
+				|| (conta.getPessoa().getTipo_pessoa().equals("J") && valor <= valorMaximoPJ)))) {
+			return true;	
+		}else {
+			return false;
+		}
+	}
 
 	public Conta findById(Long id) {
 		Optional<Conta> conta = contaRepository.findById(id);
@@ -67,6 +77,29 @@ public class ContaService {
 			return c;
 		} else {
 			return null;
+		}
+
+	}
+	
+	@Transactional
+	public String realizarTranferencia(Long id_origem, Long id_destino, Double valor, String descricao) {
+		Conta conta_origem = findById(id_origem);
+		Conta conta_destino = findById(id_destino);
+		
+		if (conta_origem != null && conta_destino != null) {
+			if (isValorValido(conta_destino,valor)) {
+				if(conta_origem.getSaldo() >= valor) {
+					conta_origem.setSaldo(conta_origem.getSaldo() - (valor));
+					conta_destino.setSaldo(conta_destino.getSaldo() + valor);
+					return "Transferência realizada com sucesso ";
+				}else {
+					return "Saldo induficiente para a transferência!";
+				}
+			}else {
+				return "Esse valor não é válido para a conta de destino";
+			}
+		}else {
+			return "Conta inválida";
 		}
 
 	}

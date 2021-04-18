@@ -41,5 +41,13 @@ public class ContaControler {
 				return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ops! Valor não permitido para esse tipo de conta");
 			}
 	}
+	@PutMapping("{id_origem}/{id_destino}/{valor}/{descricao}/realizarTransferencia")
+	public ResponseEntity<String> realizarTranferencia(@PathVariable Long id_origem,
+			@PathVariable Long id_destino,@PathVariable Double valor,@PathVariable String descricao){
+		
+		String retorno = contaService.realizarTranferencia(id_origem, id_destino, valor, descricao);
+		return ResponseEntity.ok().body(retorno);
+	}
+
 
 }
