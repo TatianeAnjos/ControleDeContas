@@ -46,13 +46,15 @@ public class TestConfig implements CommandLineRunner{
 
 
 		PessoaFisica pf1 = new PessoaFisica(null,"Maria Carvalho", "12345678910","F", data);
-		PessoaJuridica pj1 = new PessoaJuridica(null,"MAVariedades","21.125.123/0001-10","J","MAVariedadesLTDA");
-		Conta conta1 = new Conta(null, "conta1", Instant.now(), 0.0, pf1);
+		PessoaJuridica pj1 = new PessoaJuridica(null,"MAVariedades","21125123000110","J","MAVariedadesLTDA");
+		Conta conta1 = new Conta(null, "conta1", Instant.now(), 0.0, pj1);
+		Conta conta2 = new Conta(null, "conta2", Instant.now(), 0.0, pf1);
+
 		MovimentoConta mc = new MovimentoConta(null,"Deposito", Instant.now(), "Pagamento de Mercadoria",conta1);
 		
 		pessoaFisicaRepository.saveAll(Arrays.asList(pf1));
 		pessoaJuridicaRepository.saveAll(Arrays.asList(pj1));
-		contaRepository.saveAll(Arrays.asList(conta1));
+		contaRepository.saveAll(Arrays.asList(conta1, conta2));
 		movimentoConta.saveAll(Arrays.asList(mc));
 
 	}

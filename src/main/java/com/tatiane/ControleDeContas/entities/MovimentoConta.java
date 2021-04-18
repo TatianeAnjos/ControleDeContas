@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity
 public class MovimentoConta implements Serializable {
@@ -70,6 +69,14 @@ private static final long serialVersionUID = 1L;
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public Conta getConta() {
+		return conta;
+	}
+
+	public void setConta(Conta conta) {
+		this.conta = conta;
 	}
 
 	@Override
