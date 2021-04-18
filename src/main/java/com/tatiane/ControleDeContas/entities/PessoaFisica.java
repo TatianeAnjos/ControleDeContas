@@ -2,9 +2,11 @@ package com.tatiane.ControleDeContas.entities;
 
 import java.util.Date;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
+@DiscriminatorValue(value = "F")
 public class PessoaFisica extends Pessoa{
 	private static final long serialVersionUID = 1L;
 	
@@ -14,8 +16,8 @@ public class PessoaFisica extends Pessoa{
 		
 	}
 
-	public PessoaFisica(Long id_pessoa, String nome, String no_documento,Date dt_nascimento) {
-		super(id_pessoa,nome,no_documento);
+	public PessoaFisica(Long id_pessoa, String nome, String no_documento,String tipo_pessoa, Date dt_nascimento) {
+		super(id_pessoa,nome,no_documento, tipo_pessoa);
 		this.dt_nascimento = dt_nascimento;
 	}
 

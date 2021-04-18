@@ -4,15 +4,24 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo_pessoa", length = 1, discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue("P")
 public abstract class Pessoa implements Serializable{
 private static final long serialVersionUID = 1L;
 
@@ -22,6 +31,10 @@ private static final long serialVersionUID = 1L;
 	
 	private String nome;
 	private String no_documento;
+
+	@Column(insertable=false, updatable=false)
+    private String tipo_pessoa;
+
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "pessoa")
@@ -31,11 +44,12 @@ private static final long serialVersionUID = 1L;
 		
 	}
 
-	public Pessoa(Long id_pessoa, String nome, String no_documento) {
+	public Pessoa(Long id_pessoa, String nome, String no_documento, String tipo_pessoa) {
 		super();
 		this.id_pessoa = id_pessoa;
 		this.nome = nome;
 		this.no_documento = no_documento;
+		this.tipo_pessoa = tipo_pessoa;
 	}
 
 	public Long getId_pessoa() {
@@ -60,6 +74,14 @@ private static final long serialVersionUID = 1L;
 
 	public void setNo_documento(String no_documento) {
 		this.no_documento = no_documento;
+	}
+	
+	public String getTipo_pessoa() {
+		return tipo_pessoa;
+	}
+
+	public void setTipo_pessoa(String tipo_pessoa) {
+		this.tipo_pessoa = tipo_pessoa;
 	}
 	
 	public List<Conta> getContas() {
@@ -90,5 +112,5 @@ private static final long serialVersionUID = 1L;
 			return false;
 		return true;
 	}
-	
+
 }

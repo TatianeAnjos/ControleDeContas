@@ -32,7 +32,6 @@ public class TestConfig implements CommandLineRunner{
 	@Autowired
 	private ContaRepository contaRepository;
 	
-	
 	@Override
 	public void run(String... args) throws Exception {
 		
@@ -41,8 +40,8 @@ public class TestConfig implements CommandLineRunner{
 		Date data = sdf.parse("23/11/2015");
 
 
-		PessoaFisica pf1 = new PessoaFisica(null,"Maria Carvalho", "12345678910", data);
-		PessoaJuridica pj1 = new PessoaJuridica(null,"MAVariedades","21.125.123/0001-10","MAVariedadesLTDA");
+		PessoaFisica pf1 = new PessoaFisica(null,"Maria Carvalho", "12345678910","F", data);
+		PessoaJuridica pj1 = new PessoaJuridica(null,"MAVariedades","21.125.123/0001-10","J","MAVariedadesLTDA");
 		Conta conta1 = new Conta(null, "conta1", Instant.now(), 0.0, pf1);
 		
 		pessoaFisicaRepository.saveAll(Arrays.asList(pf1));
