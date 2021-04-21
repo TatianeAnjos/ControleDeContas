@@ -15,8 +15,7 @@ import com.tatiane.ControleDeContas.entities.PessoaFisica;
 import com.tatiane.ControleDeContas.entities.PessoaJuridica;
 import com.tatiane.ControleDeContas.entities.enums.StatusConta;
 import com.tatiane.ControleDeContas.repositories.ContaRepository;
-import com.tatiane.ControleDeContas.repositories.PessoaFisicaRepository;
-import com.tatiane.ControleDeContas.repositories.PessoaJuridicaRepository;
+import com.tatiane.ControleDeContas.repositories.PessoaRepository;
 
 @Configuration
 @Profile("test")
@@ -24,11 +23,11 @@ public class TestConfig implements CommandLineRunner{
 	
 
 	@Autowired
-	private PessoaFisicaRepository pessoaFisicaRepository;
+	private PessoaRepository pessoaFisicaRepository;
 	
 
-	@Autowired
-	private PessoaJuridicaRepository pessoaJuridicaRepository;
+	//@Autowired
+	//private PessoaJuridicaRepository pessoaJuridicaRepository;
 	
 	@Autowired
 	private ContaRepository contaRepository;
@@ -47,7 +46,7 @@ public class TestConfig implements CommandLineRunner{
 		Conta conta2 = new Conta(null, "conta2", Instant.now(), 0.0, pf1,StatusConta.ATIVA);
 				
 		pessoaFisicaRepository.saveAll(Arrays.asList(pf1));
-		pessoaJuridicaRepository.saveAll(Arrays.asList(pj1));
+		pessoaFisicaRepository.saveAll(Arrays.asList(pj1));
 		contaRepository.saveAll(Arrays.asList(conta1, conta2));
 
 	}

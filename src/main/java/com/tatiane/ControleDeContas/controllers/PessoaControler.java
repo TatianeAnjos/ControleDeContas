@@ -10,22 +10,19 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tatiane.ControleDeContas.entities.Pessoa;
 import com.tatiane.ControleDeContas.services.PessoaService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value = "/pessoas")
 public class PessoaControler {
 	
 	@Autowired
 	PessoaService service;
-
+	
 	@GetMapping(value = "{id}")
 	public ResponseEntity<Pessoa> findById(@PathVariable Long id){
 		Pessoa pessoaFisica = service.findById(id);
 		return ResponseEntity.ok().body(pessoaFisica);
 	}
 	
-	/*@GetMapping(value = "/{id}")
-	public ResponseEntity<Order>findByIhd(@PathVariable Long id){
-		Order obj = service.findById(id);
-		return ResponseEntity.ok().body(obj);
-	}*/
 }

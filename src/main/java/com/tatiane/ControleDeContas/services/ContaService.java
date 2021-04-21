@@ -113,7 +113,7 @@ public class ContaService {
 	}
 
 	@Transactional
-	public ContaDTO AlteraStatusConta(Long id_conta, StatusConta statusConta) {
+	public ContaDTO alteraStatusConta(Long id_conta, StatusConta statusConta) {
 		Conta c = findById(id_conta);
 		c.setStatusConta(statusConta);
 		contaRepository.save(c);
