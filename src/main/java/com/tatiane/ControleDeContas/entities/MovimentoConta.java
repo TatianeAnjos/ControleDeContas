@@ -2,6 +2,7 @@ package com.tatiane.ControleDeContas.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import com.tatiane.ControleDeContas.entities.enums.TipoMovimentoConta;
 
 @Entity
 public class MovimentoConta implements Serializable {
@@ -18,9 +21,10 @@ private static final long serialVersionUID = 1L;
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id_movimento_conta;
 	
-	private String operacao;
-	private Instant data_hora;
+	private TipoMovimentoConta tipoMovimentoConta;
+	private Date data_hora;
 	private String descricao;
+	private Double valor;
 	
 	@ManyToOne
 	@JoinColumn(name="id_conta")
@@ -30,13 +34,14 @@ private static final long serialVersionUID = 1L;
 		
 	}
 
-	public MovimentoConta(Long id_movimento_conta, String operacao, Instant data_hora, String descricao, Conta conta) {
+	public MovimentoConta(Long id_movimento_conta, TipoMovimentoConta tipoMovimentoConta, Date data_hora, String descricao, Conta conta,  Double valor) {
 		super();
 		this.id_movimento_conta = id_movimento_conta;
-		this.operacao = operacao;
+		this.setTipoMovimentoConta(tipoMovimentoConta);
 		this.data_hora = data_hora;
 		this.descricao = descricao;
 		this.conta = conta;
+		this.valor = valor;
 	}
 
 	public Long getId_movimento_conta() {
@@ -47,19 +52,11 @@ private static final long serialVersionUID = 1L;
 		this.id_movimento_conta = id_movimento_conta;
 	}
 
-	public String getOperacao() {
-		return operacao;
-	}
-
-	public void setOperacao(String operacao) {
-		this.operacao = operacao;
-	}
-
-	public Instant getData_hora() {
+	public Date getData_hora() {
 		return data_hora;
 	}
 
-	public void setData_hora(Instant data_hora) {
+	public void setData_hora(Date data_hora) {
 		this.data_hora = data_hora;
 	}
 
@@ -77,6 +74,22 @@ private static final long serialVersionUID = 1L;
 
 	public void setConta(Conta conta) {
 		this.conta = conta;
+	}
+
+	public Double getValor() {
+		return valor;
+	}
+
+	public void setValor(Double valor) {
+		this.valor = valor;
+	}
+
+	public TipoMovimentoConta getTipoMovimentoConta() {
+		return tipoMovimentoConta;
+	}
+
+	public void setTipoMovimentoConta(TipoMovimentoConta tipoMovimentoConta) {
+		this.tipoMovimentoConta = tipoMovimentoConta;
 	}
 
 	@Override
@@ -103,5 +116,6 @@ private static final long serialVersionUID = 1L;
 			return false;
 		return true;
 	}
+
 	
 }

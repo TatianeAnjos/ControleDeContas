@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tatiane.ControleDeContas.entities.enums.StatusConta;
 
 
 @Entity
@@ -27,6 +28,8 @@ private static final long serialVersionUID = 1L;
 	private String nome_conta;
 	private Instant data_hora;
 	private Double saldo;
+	private Integer statusConta;
+	
 	
 	@ManyToOne
 	@JoinColumn(name="id_pessoa")
@@ -40,13 +43,14 @@ private static final long serialVersionUID = 1L;
 		
 	}
 	
-	public Conta(Long id_conta, String nome_conta, Instant data_hora, Double saldo, Pessoa pessoa) {
+	public Conta(Long id_conta, String nome_conta, Instant data_hora, Double saldo, Pessoa pessoa,StatusConta statusConta) {
 		super();
 		this.id_conta = id_conta;
 		this.nome_conta = nome_conta;
 		this.data_hora = data_hora;
 		this.saldo = saldo;
 		this.pessoa = pessoa;
+		setStatusConta(statusConta);
 	}
 
 	public Long getId_conta() {
@@ -80,6 +84,23 @@ private static final long serialVersionUID = 1L;
 
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
+	}
+
+	public StatusConta getStatusConta() {
+		return StatusConta.valueOf(statusConta);
+	}
+
+	public void setStatusConta(StatusConta statusConta) {
+		if(statusConta != null) {
+			this.statusConta = statusConta.getCode();
+		}
+	}
+	public List<MovimentoConta> getMovimentoConta() {
+		return movimentoConta;
+	}
+
+	public void setMovimentoConta(List<MovimentoConta> movimentoConta) {
+		this.movimentoConta = movimentoConta;
 	}
 
 	@Override
