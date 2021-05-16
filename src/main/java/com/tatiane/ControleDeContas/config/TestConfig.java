@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.tatiane.ControleDeContas.entities.Conta;
+import com.tatiane.ControleDeContas.entities.MovimentoConta;
 import com.tatiane.ControleDeContas.entities.PessoaFisica;
 import com.tatiane.ControleDeContas.entities.PessoaJuridica;
 import com.tatiane.ControleDeContas.entities.enums.StatusConta;
@@ -24,10 +25,6 @@ public class TestConfig implements CommandLineRunner{
 
 	@Autowired
 	private PessoaRepository pessoaFisicaRepository;
-	
-
-	//@Autowired
-	//private PessoaJuridicaRepository pessoaJuridicaRepository;
 	
 	@Autowired
 	private ContaRepository contaRepository;

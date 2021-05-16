@@ -1,6 +1,10 @@
 package com.tatiane.ControleDeContas.controllers;
 
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,10 +12,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tatiane.ControleDeContas.DTO.ContaDTO;
 import com.tatiane.ControleDeContas.entities.Conta;
+import com.tatiane.ControleDeContas.entities.MovimentoConta;
 import com.tatiane.ControleDeContas.entities.enums.StatusConta;
 import com.tatiane.ControleDeContas.services.ContaService;
 import com.tatianeanjos.services.exceptions.DataIntegrityException;
@@ -79,4 +87,13 @@ public class ContaControler {
 		return ResponseEntity.ok().body(contaDTO);
 	}
 
+	@ApiOperation(value = "Bloqueia ou desbloqueia uma conta")
+	@GetMapping(value = "{id}/{data_inicio}/{data_fim}/consultarMovimentos")
+	public ResponseEntity<List<MovimentoConta>> consultaMovimentoConta(@PathVariable Long id ,
+			@PathVariable @DateTimeFormat(pattern="yyyy-MM-dd") Date data_inicio,
+			@PathVariable @DateTimeFormat(pattern="yyyy-MM-dd") Date data_fim){
+		Conta conta = contaService.findById(id);
+		List<MovimentoConta> list = contaService.movimentosContaPorData(conta, data_inicio, data_fim);
+		return ResponseEntity.ok().body(list);
+    }
 }

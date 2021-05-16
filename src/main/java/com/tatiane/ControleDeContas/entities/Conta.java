@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,7 +37,7 @@ private static final long serialVersionUID = 1L;
 	private Pessoa pessoa;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "conta")
+	@OneToMany(mappedBy = "conta",fetch=FetchType.EAGER)
 	private List <MovimentoConta> movimentoConta = new ArrayList<>();
 	
 	public Conta() {

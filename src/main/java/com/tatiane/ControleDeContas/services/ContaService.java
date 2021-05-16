@@ -1,6 +1,10 @@
 package com.tatiane.ControleDeContas.services;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +77,7 @@ public class ContaService {
 				contaRepository.save(c);
 				MovimentoConta mc = mcv.insertMovConta(TipoMovimentoConta.DEPOSITO, descricao, c, valor);
 				movimentoContaRepository.save(mc);
+				c.getMovimentoConta().add(mc);
 				return "Sucesso!";
 			} else {
 				return "Ops! Valor não permitido para esse tipo de conta";
@@ -93,11 +98,14 @@ public class ContaService {
 				conta_origem.setSaldo(conta_origem.getSaldo() - (valor));
 				MovimentoConta mc = mcv.insertMovConta(TipoMovimentoConta.TRANSFERENCIA, descricao, conta_origem,
 						valor);
+				conta_origem.getMovimentoConta().add(mc);
 				conta_destino.setSaldo(conta_destino.getSaldo() + valor);
 				MovimentoConta mc1 = mcv.insertMovConta(TipoMovimentoConta.DEPOSITO, descricao, conta_destino, valor);
+				conta_origem.getMovimentoConta().add(mc1);
 				movimentoContaRepository.save(mc);
 				movimentoContaRepository.save(mc1);
 				return "Sucesso!";
+				
 			} else {
 				return "Saldo induficiente para a transferência!";
 			}
@@ -118,6 +126,24 @@ public class ContaService {
 		c.setStatusConta(statusConta);
 		contaRepository.save(c);
 		return new ContaDTO(c);
+	}
+	
+	@Transactional
+	public List<MovimentoConta>movimentosContaPorData(Conta conta, Date data_inicio, Date data_fim){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		List <MovimentoConta> mov_conta = conta.getMovimentoConta();
+		List<MovimentoConta>filtro_mov_conta = new ArrayList<>();
+		for (MovimentoConta movimento: mov_conta) { // ERRO AQUI
+			System.out.println(movimento);
+			System.out.println(movimento.getData_hora());
+			System.out.println(data_inicio);
+			System.out.println(data_fim);
+			
+			if(movimento.getData_hora().after(data_inicio) && movimento.getData_hora().before(data_fim)) {
+				filtro_mov_conta.add(movimento);
+			}
+		}		
+		return filtro_mov_conta;
 	}
 
 }
