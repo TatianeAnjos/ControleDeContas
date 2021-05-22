@@ -87,7 +87,7 @@ public class ContaControler {
 		return ResponseEntity.ok().body(contaDTO);
 	}
 
-	@ApiOperation(value = "Bloqueia ou desbloqueia uma conta")
+	@ApiOperation(value = "Consulta movimento de uma conta com base em um período")
 	@GetMapping(value = "{id}/{data_inicio}/{data_fim}/consultarMovimentos")
 	public ResponseEntity<List<MovimentoConta>> consultaMovimentoConta(@PathVariable Long id ,
 			@PathVariable @DateTimeFormat(pattern="yyyy-MM-dd") Date data_inicio,
